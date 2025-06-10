@@ -2,6 +2,7 @@ import * as express from "express";
 import * as cors from "cors";
 import { createBaseServer } from "../utils/backend/base_backend/create";
 import { createImageRouter } from "./routers/image";
+import { createAIRouter } from "./routers/ai"; 
 
 async function main() {
   const router = express.Router();
@@ -35,6 +36,8 @@ async function main() {
    * [here](https://www.npmjs.com/package/cors#configuring-cors-w-dynamic-origin).
    */
   router.use(cors());
+
+  router.use(createAIRouter());
 
   /**
    * Add routes for image generation.
