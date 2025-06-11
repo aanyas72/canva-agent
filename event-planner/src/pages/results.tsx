@@ -1,31 +1,32 @@
-import { Rows } from "@canva/app-ui-kit";
-import {
-  AppError,
-  ImageGrid,
-  LoadingResults,
-  PromptInput,
-  ReportBox,
-} from "src/components";
 import { useAppContext } from "src/context";
-import { EXPECTED_LOADING_TIME_IN_SECONDS } from "src/config";
+import { Box, FormField, MultilineInput } from "@canva/app-ui-kit";
 
 export const ResultsPage = () => {
-  const { isLoadingImages } = useAppContext();
+  const { apiResponse } = useAppContext();
 
-  if (isLoadingImages) {
-    return (
-      <LoadingResults durationInSeconds={EXPECTED_LOADING_TIME_IN_SECONDS} />
-    );
+  if (!apiResponse) {
+    return <Box>No data yet</Box>;
   }
 
   return (
-    <Rows spacing="1u">
-      <AppError />
-      <Rows spacing="2u">
-        <ImageGrid />
-        <PromptInput />
-        <ReportBox />
-      </Rows>
-    </Rows>
+    <Box padding="2u">
+      {Object.entries(apiResponse).map(([key, value]) => (
+        <Box key={key} paddingBottom="1u">
+          <FormField
+            label={key}
+            value={String(value)}
+            control={({ id, ...props }) => (
+              <MultilineInput
+                {...props}
+                id={id}
+                readOnly
+                minRows={3}
+                value={String(value)}
+              />
+            )}
+          />
+        </Box>
+      ))}
+    </Box>
   );
 };

@@ -4,7 +4,6 @@ import {
   Box,
   Button,
   FormField,
-  LightBulbIcon,
   MultilineInput,
   TextInput,
 } from "@canva/app-ui-kit";
@@ -16,6 +15,10 @@ import { useIntl } from "react-intl";
 // @TODO: Adjust according to your specific requirements.
 const MAX_INPUT_LENGTH = 280;
 const MIN_INPUT_ROWS = 3;
+
+const handlePlanClick = async () => {
+    
+  };
 
 
 export const PromptInput = () => {
@@ -111,5 +114,8 @@ export const PromptInput = () => {
       )}
     />
   </Box>
+  <Button variant="primary" onClick={handlePlanClick}>Plan</Button>
 </Box>
+
+
 );};
