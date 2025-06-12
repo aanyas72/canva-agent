@@ -1,40 +1,53 @@
-import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useAppContext } from "src/context";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
   FormField,
-  MultilineInput,
   TextInput,
+  Text,
+  MultilineInput
 } from "@canva/app-ui-kit";
-import { useAppContext } from "src/context";
-import { Paths } from "src/routes";
-import { PromptInputMessages as Messages } from "./prompt_input.messages";
-import { useIntl } from "react-intl";
-
-// @TODO: Adjust according to your specific requirements.
-const MAX_INPUT_LENGTH = 280;
-const MIN_INPUT_ROWS = 3;
-
-const handlePlanClick = async () => {
-    
-  };
 
 
 export const PromptInput = () => {
-  const { pathname } = useLocation();
-  const isHomeRoute = pathname === Paths.HOME;
-  const { promptInput, setPromptInput, promptInputError } = useAppContext();
+  const {
+    eventName, setEventName,
+    audience, setAudience,
+    date, setDate,
+    location, setLocation,
+    goals, setGoals,
+    setApiResponse,
+  } = useAppContext();
 
-  const onPromptInputChange = (value: string) => {
-    setPromptInput(value);
+  const navigate = useNavigate();
+
+  const handlePlanClick = async () => {
+    const payload = {
+      eventName,
+      audience,
+      date,
+      location,
+      goals,
+    };
+
+    // try {
+    //   const res = await fetch("http://localhost:3001/generate-content", {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify(payload),
+    //   });
+
+    //   if (!res.ok) throw new Error("Failed to generate content");
+
+    //   const data = await res.json();
+    //   setApiResponse(data);
+      navigate("/results");
+    // } catch (err) {
+    //   console.error("Error submitting:", err);
+    //   // You could show a user-friendly error here
+    // }
   };
-
-  const [eventName, setEventName] = useState("");
-  const [audience, setAudience] = useState("");
-  const [eventDate, setEventDate] = useState("");
-  const [location, setLocation] = useState("");
-  const [keyGoals, setKeyGoals] = useState("");
 
   return (
   <Box display="flex" flexDirection="column">
@@ -71,12 +84,12 @@ export const PromptInput = () => {
   <Box paddingBottom="2u">
     <FormField
       label="Date"
-      value={eventDate}
+      value={date}
       control={(props) => (
         <TextInput
           {...props}
-          value={eventDate}
-          onChange={setEventDate}
+          value={date}
+          onChange={setDate}
           placeholder="e.g. July 15, 2025"
         />
       )}
@@ -101,21 +114,19 @@ export const PromptInput = () => {
   <Box paddingBottom="2u">
     <FormField
       label="Key Goals"
-      value={keyGoals}
+      value={goals}
       control={(props) => (
         <MultilineInput
           {...props}
-          value={keyGoals}
-          onChange={setKeyGoals}
+          value={goals}
+          onChange={setGoals}
           placeholder="e.g. Showcase work, connect with mentors"
           minRows={3}
-          maxLength={MAX_INPUT_LENGTH}
+          maxLength={300}
         />
       )}
     />
   </Box>
   <Button variant="primary" onClick={handlePlanClick}>Plan</Button>
 </Box>
-
-
 );};

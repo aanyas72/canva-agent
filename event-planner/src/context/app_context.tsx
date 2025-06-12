@@ -1,53 +1,53 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 
 export interface AppContextType {
-  promptInput: string;
-  setPromptInput: (value: string) => void;
-  promptInputError: string | null;
-  setPromptInputError: (value: string | null) => void;
+  eventName: string;
+  setEventName: (value: string) => void;
+  audience: string;
+  setAudience: (value: string) => void;
+  date: string;
+  setDate: (value: string) => void;
+  location: string;
+  setLocation: (value: string) => void;
+  goals: string;
+  setGoals: (value: string) => void;
   apiResponse: any;
   setApiResponse: (data: any) => void;
 }
 
-export const AppContext = createContext<AppContextType>({
-  promptInput: "",
-  setPromptInput: () => {},
-  promptInputError: null,
-  setPromptInputError: () => {},
-  apiResponse: null,
-  setApiResponse: () => {},
-});
+export const AppContext = createContext<AppContextType | undefined>(undefined);
 
-/**
- * Provides application-wide state and methods using React Context.
- * @param {object} props - The props object.
- * @param {React.ReactNode} props.children - The children components wrapped by the provider.
- * @returns {JSX.Element} The provider component.
- * @description This provider component wraps the entire application to provide application-wide state and methods using React Context.
- * It manages state related to app errors, loading status, remaining credits, user input for prompts, image styles, and generated images.
- * It exposes these state values and setter methods to its child components via the AppContext.
- * For more information on React Context, refer to the official React documentation: {@link https://react.dev/learn/passing-data-deeply-with-context}.
- */
-export const ContextProvider = ({ children }: { children: React.ReactNode }): JSX.Element => {
-  const [promptInput, setPromptInput] = useState("");
-  const [promptInputError, setPromptInputError] = useState<string | null>(null);
+export const ContextProvider = ({ children }: { children: React.ReactNode }) => {
+  const [eventName, setEventName] = useState("");
+  const [audience, setAudience] = useState("");
+  const [date, setDate] = useState("");
+  const [location, setLocation] = useState("");
+  const [goals, setGoals] = useState("");
   const [apiResponse, setApiResponse] = useState<any>(null);
 
-  return (
-    <AppContext.Provider
-      value={{
-        promptInput,
-        setPromptInput,
-        promptInputError,
-        setPromptInputError,
-        apiResponse,
-        setApiResponse,
-      }}
-    >
-      {children}
-    </AppContext.Provider>
-  );
+  const value: AppContextType = {
+    eventName,
+    setEventName,
+    audience,
+    setAudience,
+    date,
+    setDate,
+    location,
+    setLocation,
+    goals,
+    setGoals,
+    apiResponse,
+    setApiResponse,
+  };
+
+  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
 
-// Optional convenience hook
-export const useAppContext = () => useContext(AppContext);
+// Shortcut hook to use context
+export const useAppContext = (): AppContextType => {
+  const context = useContext(AppContext);
+  if (!context) {
+    throw new Error("useAppContext must be used within a ContextProvider");
+  }
+  return context;
+};
