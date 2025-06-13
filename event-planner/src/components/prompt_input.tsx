@@ -1,4 +1,6 @@
 import { useAppContext } from "src/context";
+import { useContext } from "react";
+import { AppContext } from "src/context";
 import { useNavigate } from "react-router-dom";
 import {
   Box,
@@ -22,32 +24,56 @@ export const PromptInput = () => {
 
   const navigate = useNavigate();
 
+  // const handlePlanClick = async () => {
+  //   const payload = {
+  //     eventName,
+  //     audience,
+  //     date,
+  //     location,
+  //     goals,
+  //   };
+
+  //   try {
+  //     const res = await fetch("http://localhost:3001/generate-content", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(payload),
+  //     });
+
+  //     if (!res.ok) throw new Error("Failed to generate content");
+
+  //     const data = await res.json();
+  //     setApiResponse(data);
+  //     navigate("/results");
+  //   } catch (err) {
+  //     console.error("Error submitting:", err);
+  //     // You could show a user-friendly error here
+  //   }
+  // };
+
+  const context = useContext(AppContext);
+
+  if (!context) {
+    throw new Error("AppContext must be used within a ContextProvider");
+  }
+
+  const { setSelectedTemplates } = context;
+
   const handlePlanClick = async () => {
-    const payload = {
-      eventName,
-      audience,
-      date,
-      location,
-      goals,
-    };
+  const res = await fetch("http://localhost:3001/choose-template", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ eventName, audience, goals }),
+  });
 
-    // try {
-    //   const res = await fetch("http://localhost:3001/generate-content", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify(payload),
-    //   });
+  const data = await res.json();
 
-    //   if (!res.ok) throw new Error("Failed to generate content");
-
-    //   const data = await res.json();
-    //   setApiResponse(data);
-      navigate("/results");
-    // } catch (err) {
-    //   console.error("Error submitting:", err);
-    //   // You could show a user-friendly error here
-    // }
-  };
+  if (data.success) {
+    setApiResponse(data);
+    setSelectedTemplates(data.result); // e.g. ["Instagram Post", "Agenda"]
+    navigate("/results");
+  }
+};
 
   return (
   <Box display="flex" flexDirection="column">

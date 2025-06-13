@@ -1,27 +1,31 @@
+import { Box, FormField, Checkbox } from "@canva/app-ui-kit";
 import { useAppContext } from "src/context";
-import { Box, FormField, MultilineInput } from "@canva/app-ui-kit";
+import { useState } from "react";
 
 export const ResultsPage = () => {
   const { apiResponse } = useAppContext();
+  const [selectedTemplates, setSelectedTemplates] = useState<string[]>([]);
 
-  if (!apiResponse) {
-    return <Box>No data yet</Box>;
-  }
+  if (!apiResponse?.result) return <Box>No results found.</Box>;
 
   return (
     <Box padding="2u">
-      {Object.entries(apiResponse).map(([key, value]) => (
-        <Box key={key} paddingBottom="1u">
+      {apiResponse.result.map((option: string) => (
+        <Box key={option} paddingBottom="1u">
           <FormField
-            label={key}
-            value={String(value)}
+            label={option}
             control={({ id, ...props }) => (
-              <MultilineInput
+              <Checkbox
                 {...props}
                 id={id}
-                readOnly
-                minRows={3}
-                value={String(value)}
+                label={option}
+                value={option}
+                checked={selectedTemplates.includes(option)}
+                onChange={(value, checked) =>
+                  setSelectedTemplates((prev) =>
+                    checked ? [...prev, value] : prev.filter((item) => item !== value)
+                  )
+                }
               />
             )}
           />

@@ -1,7 +1,6 @@
 import * as express from "express";
 import * as cors from "cors";
 import { createBaseServer } from "../utils/backend/base_backend/create";
-import { createImageRouter } from "./routers/image";
 import { createAIRouter } from "./routers/ai"; 
 
 async function main() {
@@ -36,14 +35,7 @@ async function main() {
    * [here](https://www.npmjs.com/package/cors#configuring-cors-w-dynamic-origin).
    */
   router.use(cors());
-
   router.use(createAIRouter());
-
-  /**
-   * Add routes for image generation.
-   */
-  const imageRouter = createImageRouter();
-  router.use(imageRouter);
 
   const server = createBaseServer(router);
   server.start(process.env.CANVA_BACKEND_PORT);
