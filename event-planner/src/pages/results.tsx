@@ -1,6 +1,7 @@
-import { Box, FormField, Checkbox } from "@canva/app-ui-kit";
+import { Box, FormField, Checkbox, Button } from "@canva/app-ui-kit";
 import { useAppContext } from "src/context";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const ResultsPage = () => {
   const { apiResponse } = useAppContext();
@@ -8,10 +9,18 @@ export const ResultsPage = () => {
 
   if (!apiResponse?.result) return <Box>No results found.</Box>;
 
+  const navigate = useNavigate();
+
+  const handleCheckboxes = () => {
+    // TODO: figure out how to auto insert assets into canva
+    // generate text as well and insert it into the templates
+    navigate("/connect");
+  }
+
   return (
     <Box padding="2u">
-      <div style={{ fontWeight: "bold", fontSize: "20px", marginBottom: "16px" }}>
-        Suggested assets:
+      <div style={{ fontWeight: "bold", fontSize: "20px", marginBottom: "13px" }}>
+        Suggested Assets:
       </div>
 
       <FormField
@@ -35,6 +44,8 @@ export const ResultsPage = () => {
           </Box>
         )}
       />
+      <Box paddingBottom="2u"></Box>
+      <Button variant="primary" onClick={handleCheckboxes}>Generate</Button>
     </Box>
   );
 };

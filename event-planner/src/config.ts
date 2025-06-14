@@ -18,4 +18,4 @@ export const POLLING_INTERVAL_IN_SECONDS = 3;
  * Your app's name. This is used when reporting generated content.
  * @TODO: Update your app's name here.
  */
-export const APP_NAME = "Add your app name here";
+export const APP_NAME = "Event Planner";

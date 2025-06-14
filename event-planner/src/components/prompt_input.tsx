@@ -7,7 +7,6 @@ import {
   Button,
   FormField,
   TextInput,
-  Text,
   MultilineInput
 } from "@canva/app-ui-kit";
 
@@ -76,7 +75,10 @@ export const PromptInput = () => {
 };
 
   return (
-  <Box display="flex" flexDirection="column">
+  <Box display="flex" flexDirection="column">    
+    <div style={{ fontWeight: "bold", fontSize: "20px", marginBottom: "16px" }}>
+        Plan Event:
+      </div>
   <Box paddingBottom="2u">
   <FormField
     label="Event Name"
