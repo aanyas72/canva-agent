@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { Button, Rows, Text } from "@canva/app-ui-kit";
-import { useAppContext } from "src/context";
 import { Paths } from "src/routes";
 import * as styles from "styles/components.css";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -10,11 +9,9 @@ import { FormattedMessage, useIntl } from "react-intl";
  */
 export const ErrorPage = () => {
   const navigate = useNavigate();
-  const { setPromptInput } = useAppContext();
   const intl = useIntl();
 
   const onClick = () => {
-    setPromptInput("");
     navigate(Paths.HOME);
   };
 
@@ -24,7 +21,7 @@ export const ErrorPage = () => {
         <Text>
           <FormattedMessage
             defaultMessage="Something went wrong."
-            description="A message to indicate that something went wrong, but no more information is available"
+            description="Something went wrong :("
           />
         </Text>
         <Button variant="primary" onClick={onClick} stretch={true}>
