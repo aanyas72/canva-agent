@@ -22,34 +22,6 @@ export const PromptInput = () => {
   } = useAppContext();
 
   const navigate = useNavigate();
-
-  // const handlePlanClick = async () => {
-  //   const payload = {
-  //     eventName,
-  //     audience,
-  //     date,
-  //     location,
-  //     goals,
-  //   };
-
-  //   try {
-  //     const res = await fetch("http://localhost:3001/generate-content", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify(payload),
-  //     });
-
-  //     if (!res.ok) throw new Error("Failed to generate content");
-
-  //     const data = await res.json();
-  //     setApiResponse(data);
-  //     navigate("/results");
-  //   } catch (err) {
-  //     console.error("Error submitting:", err);
-  //     // You could show a user-friendly error here
-  //   }
-  // };
-
   const context = useContext(AppContext);
 
   if (!context) {

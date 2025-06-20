@@ -4,17 +4,43 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const ResultsPage = () => {
-  const { apiResponse } = useAppContext();
+  const { apiResponse, setGeneratedContent } = useAppContext();
   const [selectedTemplates, setSelectedTemplates] = useState<string[]>([]);
 
   if (!apiResponse?.result) return <Box>No results found.</Box>;
 
   const navigate = useNavigate();
 
-  const handleCheckboxes = () => {
-    // TODO: figure out how to auto insert assets into canva
-    // generate text as well and insert it into the templates
-    navigate("/connect");
+  const handleCheckboxes = async () => {
+    try {
+    const response = await fetch("http://localhost:3001/generate-content", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        eventName: apiResponse.eventName,
+        audience: apiResponse.audience,
+        date: apiResponse.date,
+        location: apiResponse.location,
+        goals: apiResponse.goals,
+        chosenTemplates: selectedTemplates
+      })
+    });
+
+    const result = await response.json();
+    console.log("Generated content:", result);
+
+    if (result.success) {
+      setGeneratedContent(result.result);
+      navigate("/connect");
+    }
+    
+    // Navigate to display page or insert into Canva
+    navigate("/connect", { state: { result } });
+  } catch (error) {
+    console.error("Error generating content:", error);
+  }
   }
 
   return (

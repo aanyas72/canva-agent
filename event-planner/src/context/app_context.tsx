@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
+import { GeneratedContent } from "./types";
 
 export interface AppContextType {
   eventName: string;
@@ -21,6 +22,9 @@ export interface AppContextType {
 
   selectedTemplates: string[];
   setSelectedTemplates: (templates: string[]) => void;
+
+  generatedContent: GeneratedContent | null;
+  setGeneratedContent: (content: GeneratedContent | null) => void;
 }
 
 export const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -33,6 +37,7 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
   const [goals, setGoals] = useState<string>("");
   const [apiResponse, setApiResponse] = useState<any>(null);
   const [selectedTemplates, setSelectedTemplates] = useState<string[]>([]);
+  const [generatedContent, setGeneratedContent] = useState<GeneratedContent | null>(null);
 
   return (
     <AppContext.Provider
@@ -51,6 +56,8 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
         setApiResponse,
         selectedTemplates,
         setSelectedTemplates,
+        generatedContent,
+        setGeneratedContent,
       }}
     >
       {children}

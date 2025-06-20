@@ -2,6 +2,7 @@
 import * as express from "express";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import * as dotenv from "dotenv";
+import { templates } from "../templates";
 
 dotenv.config();
 
@@ -11,17 +12,50 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY as string);
 
 // Generate content for graphics endpoint
 router.post("/generate-content", async (req, res) => {
-  const { eventName, audience, date, location, goals } = req.body;
+  const { eventName, audience, date, location, goals, chosenTemplates } = req.body;
+
+  const matchingTemplates = templates.filter(t => chosenTemplates.includes(t.type));
 
   const prompt = `
-Generate a JSON object for an event invitation.
-Event Name: ${eventName}
-Location: ${location}
-Audience: ${audience}
-Date: ${date}
-Goals: ${goals}
+You are a Canva content assistant.
 
-Return only JSON with keys: title, description, call_to_action
+Here are the event details:
+- Name: ${eventName}
+- Audience: ${audience}
+- Date: ${date}
+- Location: ${location}
+- Goals: ${goals}
+
+The user wants to create content for the following asset types:
+${JSON.stringify(chosenTemplates)}
+
+Below is a list of available templates for those types. Each includes name, type, description, and URL.
+
+${JSON.stringify(matchingTemplates, null, 2)}
+
+From these options, choose the best-fitting templates based on the event description and the template descriptions. For each chosen template, generate placeholder text tailored to the asset type and the event’s goals and audience.
+
+Return only valid JSON like this:
+
+{
+  "event_overview": {
+    "title": "Short branded title",
+    "description": "Brief summary of the event",
+    "call_to_action": "Optional CTA like 'Join us now'"
+  },
+  "templates": [
+    {
+      "name": "...",
+      "type": "...",
+      "url": "...",
+      "text_content": {
+        "header": "...",
+        "body": "...",
+        "footer": "..."
+      }
+    }
+  ]
+}
 `;
 
   try {
