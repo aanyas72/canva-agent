@@ -33,7 +33,8 @@ Below is a list of available templates for those types. Each includes name, type
 
 ${JSON.stringify(matchingTemplates, null, 2)}
 
-From these options, choose the best-fitting templates based on the event description and the template descriptions. For each chosen template, generate placeholder text tailored to the asset type and the event’s goals and audience.
+From these options, choose the best-fitting templates based on the event description and the template descriptions. For each chosen template, generate placeholder text tailored to the asset type and the event's goals and audience.
+Avoid using placeholder tokens like [Event Name] or [Date]; instead, use the provided values.
 
 Return only valid JSON like this:
 

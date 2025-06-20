@@ -21,7 +21,7 @@ export interface AppContextType {
   setApiResponse: (data: any) => void;
 
   selectedTemplates: string[];
-  setSelectedTemplates: (templates: string[]) => void;
+  setSelectedTemplates: React.Dispatch<React.SetStateAction<string[]>>;
 
   generatedContent: GeneratedContent | null;
   setGeneratedContent: (content: GeneratedContent | null) => void;

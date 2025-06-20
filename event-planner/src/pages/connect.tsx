@@ -53,12 +53,16 @@ export const ConnectPage = () => {
         Integration Options
       </div>
 
-      <div style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
+      <div style={{ display: "flex", alignItems: "center"}}>
         <span>📅 Send Google Calendar invites</span>
       </div>
 
       <div style={{ display: "flex", alignItems: "center" }}>
         <span>📧 Send invites through Mailchimp</span>
+      </div>
+
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <span>📑 Print with Canva</span>
       </div>
     </Box>
   );

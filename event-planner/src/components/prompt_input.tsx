@@ -44,6 +44,7 @@ export const PromptInput = () => {
     setSelectedTemplates(data.result); // e.g. ["Instagram Post", "Agenda"]
     navigate("/results");
   }
+  navigate("/results");
 };
 
   return (
