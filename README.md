@@ -54,3 +54,22 @@
 4. **Start the app**
     ```bash
     npm start
+
+## Project Structure
+
+| Folder/File   | Purpose                                      |
+|---------------|----------------------------------------------|
+| `/src`        | React frontend using Canva App SDK           |
+| `/server`     | Node + Express backend for Gemini requests   |
+| `.env`        | API key configuration for Gemini             |
+
+---
+
+## Tech Stack
+
+- 🧩 [Canva App SDK](https://www.canva.dev/)
+- 🧠 [Gemini Flash 2.0](https://aistudio.google.com/)
+- ⚛️ React + TypeScript
+- 🌐 Node.js + Express
+
+---
