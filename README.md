@@ -1,6 +1,6 @@
 # Evently: A Canva AI Agent for Event Planning Asset Generation
  **Evently** combines user inputs with LLM intelligence and Canva’s creative tooling to streamline the asset creation process.
- Built for the [Folio x Canva AI Agent Challenge]
+ Built for the [Folio x Canva AI Agent Challenge](https://app.folioworks.com/challenges/5)
 
  ---
 
